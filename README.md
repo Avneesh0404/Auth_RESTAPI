@@ -9,26 +9,53 @@
 A **production-grade authentication & authorization API** built with **Node.js, Express, and MongoDB**, implementing **JWT access tokens, refresh tokens, and role-based access control (RBAC)**.
 
 ---
+## 🔐 Authentication Flow
 
-## ✨ Features
-
-- Secure **user signup & login**
-- **JWT access tokens** (short-lived)
-- **Refresh tokens** stored hashed in DB
-- Refresh tokens sent via **httpOnly cookies**
-- `/refresh` endpoint for session continuation
-- Proper **logout** with refresh token revocation
-- **Role-Based Access Control (RBAC)** (`student`, `teacher`)
-- Clean **controller–service architecture**
+![Auth Flow](docs/auth-flow.png)
 
 ---
+## 🔑 Token Strategy (Why it works)
 
-## 🔁 Auth Flow (High Level)
+This API uses **two-token authentication** to balance **security** and **user experience**.
+
+### Access Token
+- **Lifetime:** 15 minutes
+- **Purpose:** Authorize API requests
+- **Where used:** `Authorization: Bearer <token>`
+- **Why short-lived:**
+  - Limits damage if token is stolen
+  - No server-side storage needed
+  - Keeps protected APIs stateless & fast
+
+### Refresh Token
+- **Lifetime:** 7 days
+- **Purpose:** Maintain user session
+- **Where stored:** httpOnly cookie + hashed in DB
+- **Why long-lived:**
+  - Prevents frequent re-login
+  - Enables silent access-token renewal
+  - Allows proper logout & session invalidation
+
+### How they work together
+Login → Access Token (15m) + Refresh Token (7d)
+Access Token expires → /refresh → New Access Token
+Refresh Token expires → User logs in again
+
+### Logout behavior
+- Refresh token is revoked server-side
+- Refresh cookie is cleared
+- Access token expires naturally
+
+This ensures **secure sessions without forcing frequent logins**.
 
 
----
+## 🛡️ Role-Based Access Control (RBAC)
 
-## 🛡️ Authorization (RBAC)
+Authorization is enforced **after authentication** using stateless middleware.
+
+- Roles are embedded in the access token
+- No database calls during authorization
+- Route-level permission checks
 
 | Route | Access |
 |------|-------|
@@ -36,17 +63,6 @@ A **production-grade authentication & authorization API** built with **Node.js, 
 | `/teacherdetails` | Teacher |
 | `/courses` | Student & Teacher |
 
----
-
-## 🧠 Security Highlights
-
-- Passwords hashed with **bcrypt**
-- Refresh tokens **never stored in plaintext**
-- Access tokens are **stateless & short-lived**
-- Logout invalidates **refresh tokens**, not access tokens
-- RBAC is **stateless** (no DB lookup per request)
-
----
 
 
 ---
