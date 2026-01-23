@@ -70,13 +70,13 @@ Authorization is enforced **after authentication** using stateless middleware.
 ## 🚀 API Endpoints
 
 ### Auth
-- `POST /api/signup`
-- `POST /api/login`
-- `POST /api/refresh`
-- `POST /api/logout`
+- `POST /signup`
+- `POST /login`
+- `POST /refresh`
+- `POST /logout`
 
 ### Protected
-- `GET /api/studentdetails`
-- `GET /api/teacherdetails`
-- `GET /api/courses`
+- `GET /studentdetails`
+- `GET /teacherdetails`
+- `GET /courses`
 
