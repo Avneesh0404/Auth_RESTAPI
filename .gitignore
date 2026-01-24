@@ -30,3 +30,6 @@ build/
 
 # Misc
 .cache/
+
+.dockerignore
+.compose.yaml
