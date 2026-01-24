@@ -6,10 +6,8 @@ services:
     container_name: auth_api
     ports:
       - "8000:8000"
-    environment:
-      PORT: 8000
-      MONGOURI: mongodb://mongo:27017/AUTH_RESTAPI
-      TOKEN_SECRET: Avneesh4444
+    env_file:
+      - .env
     depends_on:
       - mongo
   mongo:
