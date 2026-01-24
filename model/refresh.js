@@ -22,5 +22,10 @@ const refreshTokenSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+refreshTokenSchema.index({
+  token_hash: 1,
+  is_revoked: 1
+});
+
 
 module.exports = mongoose.model("RefreshToken", refreshTokenSchema);

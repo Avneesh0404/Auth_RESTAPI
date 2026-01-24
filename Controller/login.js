@@ -59,7 +59,7 @@ const logout = async (req, res) => {
     .digest("hex");
 
   try {
-    const storeduser = await RefreshToken.findOneAndUpdate(
+    await RefreshToken.findOneAndUpdate(
       { token_hash: refreshTokenHash },
       { is_revoked: true },
     );
