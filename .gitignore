@@ -32,4 +32,4 @@ build/
 .cache/
 
 .dockerignore
-.compose.yaml
+compose.yaml
