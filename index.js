@@ -15,7 +15,9 @@ app.use(route);
 
 
 
-mongoose.connect(mongoURI).then(()=>console.log("MongoDB connected"))
+mongoose.connect(mongoURI,{
+    dbName:"auth_api"
+}).then(()=>console.log("MongoDB connected"))
 
 app.listen(PORT,()=>{
     console.log(`Server listening on ${PORT} `)
