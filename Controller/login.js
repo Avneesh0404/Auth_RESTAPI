@@ -72,7 +72,7 @@ const logout = async (req, res) => {
       })
       .status(200)
       .json({
-        message: "Cleared Cookie Logged out Successfully",
+        message: "Cleared Cookie and Logged out Successfully",
       });
   } catch (error) {
     return res.status(500).json({

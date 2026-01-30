@@ -3,7 +3,7 @@ const authz = (...allowedroles) => {
     try {
       if (!req.user || !allowedroles.includes(req.user.role)) {
         return res.status(403).json({
-          message: "Kidar Not Allowed Prava",
+          message: "Not Allowed",
         });
       }
       next();
